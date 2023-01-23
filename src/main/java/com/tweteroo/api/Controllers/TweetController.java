@@ -12,38 +12,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tweteroo.api.repository.UserRepository;
-import com.tweteroo.api.dto.UserDto;
-import com.tweteroo.api.model.UserModel;
+import com.tweteroo.api.dto.TweetDto;
+import com.tweteroo.api.model.TweetModel;
+import com.tweteroo.api.repository.TweetRepository;
 
 @RestController
-@RequestMapping("/sign-up")
-public class Controller {
+@RequestMapping("/tweets")
+public class TweetController {
     @Autowired
-    private UserRepository repository;
+    private TweetRepository repository;
 
-    @GetMapping
-    public List<UserModel> listAll() {
+    @GetMapping("/{username}")
+    public List<TweetModel> listAll() {
         return repository.findAll();
     }
 
     @PostMapping
-    public void postUser(@RequestBody UserDto req) {
-        repository.save(new UserModel(req));
+    public void postTweet(@RequestBody TweetDto req) {
+        repository.save(new TweetModel(req));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public void deleteTweet(@PathVariable Long id) {
         repository.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    public void updateCar(@PathVariable Long id, @RequestBody UserDto req) {
-        repository.findById(id).map(user -> {
-            user.setAvatar(req.avatar());
-            user.setUsername(req.username());
+    public void updateTweet(@PathVariable Long id, @RequestBody TweetDto req) {
+        repository.findById(id).map(tweet -> {
+            tweet.setTweet((req.tweet()));
+            tweet.setUsername(req.username());
 
-            return repository.save(user);
+            return repository.save(tweet);
         });
     }
 }
