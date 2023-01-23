@@ -21,17 +21,4 @@ public class UserService {
     public void save(UserDto req) {
         repository.save(new UserModel(req));
     }
-
-    public void deleteById(Long id) {
-        repository.deleteById(id);
-    }
-
-    public void update(Long id, UserDto req) {
-        repository.findById(id).map(user -> {
-            user.setAvatar(req.avatar());
-            user.setUsername(req.username());
-
-            return repository.save(user);
-        });
-    }
 }
