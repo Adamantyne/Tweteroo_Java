@@ -21,4 +21,8 @@ public class UserService {
     public void save(UserDto req) {
         repository.save(new UserModel(req));
     }
+
+    public List<UserModel> findByUsername(String username){
+        return repository.findByUsername(username);
+    }
 }

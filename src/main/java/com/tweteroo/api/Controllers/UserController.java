@@ -31,7 +31,13 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void postUser(@RequestBody UserDto req) {
-        service.save(req);
-    }
+
+    public ResponseEntity<String> postUser(@RequestBody UserDto req) {
+        if(service.findByUsername(req.username()).isEmpty() == false){
+            return ResponseEntity.badRequest().body("user already exist");
+        }else {
+            service.save(req);
+            return ResponseEntity.ok().body("ok");
+        }
+      }
 }
