@@ -30,12 +30,8 @@ public class TweetService {
         return repository.findByUsername(username);
     }
 
-    public Page<TweetModel> findPage(Pageable pageable) {
-        int page = Integer.parseInt(pageable.getPageParameter());
-        int size = Integer.parseInt(pageable.getSizeParameter());
-
+    public Page<TweetModel> findPage(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-
         return new PageImpl<>(repository.findAll(), pageRequest, size);
     }
 }

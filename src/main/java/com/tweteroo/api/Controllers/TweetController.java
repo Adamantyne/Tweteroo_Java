@@ -27,9 +27,9 @@ public class TweetController {
     @Autowired
     private TweetService service;
 
-    @GetMapping
-    public Page<TweetModel> getTweets(@PageableDefault(page = 0, size = 5) Pageable page) {
-        return service.findPage(page);
+    @GetMapping("/{page}/{size}")
+    public Page<TweetModel> getTweets(@PathVariable int page, @PathVariable int size) {
+        return service.findPage(page, size);
     }
 
     @GetMapping("/{username}")
